@@ -1,70 +1,94 @@
-import { SymbolView } from 'expo-symbols';
-import { Link, Tabs } from 'expo-router';
-import { Platform, Pressable } from 'react-native';
-
+import { Tabs, useRouter } from 'expo-router';
+import { Pressable, View, Text, StyleSheet } from 'react-native';
 import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+
+const TAB_ICONS: Record<string, { active: string; inactive: string }> = {
+  dashboard: { active: '◆', inactive: '◇' },
+  missions: { active: '★', inactive: '☆' },
+  journal: { active: '●', inactive: '○' },
+  progress: { active: '▲', inactive: '△' },
+};
+
+function TabIcon({ name, focused }: { name: string; focused: boolean }) {
+  const icons = TAB_ICONS[name] || { active: '•', inactive: '○' };
+  return (
+    <Text style={{ fontSize: 22, color: focused ? Colors.dark.primary : Colors.dark.tabIconDefault }}>
+      {focused ? icons.active : icons.inactive}
+    </Text>
+  );
+}
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const colors = Colors.dark;
+  const router = useRouter();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
+        headerShown: true,
+        headerStyle: { backgroundColor: colors.background },
+        headerTintColor: colors.text,
+        headerTitleStyle: { fontWeight: '600', fontSize: 18 },
+        tabBarStyle: {
+          backgroundColor: colors.surface,
+          borderTopColor: colors.border,
+          borderTopWidth: 1,
+          paddingBottom: 8,
+          paddingTop: 8,
+          height: 60,
+        },
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.tabIconDefault,
+        tabBarLabelStyle: { fontSize: 11, fontWeight: '500' },
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="dashboard"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
+          title: 'Dashboard',
+          tabBarIcon: ({ focused }) => <TabIcon name="dashboard" focused={focused} />,
           headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable style={{ marginRight: 15 }}>
-                {({ pressed }) => (
-                  <SymbolView
-                    name={{ ios: 'info.circle', android: 'info', web: 'info' }}
-                    size={25}
-                    tintColor={Colors[colorScheme].text}
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
+            <View style={{ flexDirection: 'row', marginRight: 12, gap: 4 }}>
+              <Pressable onPress={() => router.push('/achievements')} style={styles.headerBtn}>
+                <Text style={styles.headerBtnText}>🏆</Text>
               </Pressable>
-            </Link>
+              <Pressable onPress={() => router.push('/settings')} style={styles.headerBtn}>
+                <Text style={styles.headerBtnText}>⚙</Text>
+              </Pressable>
+            </View>
           ),
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="missions"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: 'chevron.left.forwardslash.chevron.right',
-                android: 'code',
-                web: 'code',
-              }}
-              tintColor={color}
-              size={28}
-            />
-          ),
+          title: 'Missions',
+          tabBarIcon: ({ focused }) => <TabIcon name="missions" focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
+        name="journal"
+        options={{
+          title: 'Journal',
+          tabBarIcon: ({ focused }) => <TabIcon name="journal" focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
+        name="progress"
+        options={{
+          title: 'Progress',
+          tabBarIcon: ({ focused }) => <TabIcon name="progress" focused={focused} />,
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  headerBtn: {
+    padding: 6,
+  },
+  headerBtnText: {
+    fontSize: 20,
+  },
+});

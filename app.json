@@ -1,23 +1,33 @@
 {
   "expo": {
-    "name": "Forget_Her",
-    "slug": "Forget_Her",
+    "name": "Forget Her",
+    "slug": "forget-her",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "forgether",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0A0A0F",
+    "primaryColor": "#7C5CFC",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.yourname.forgether",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Not used",
+        "NSPhotoLibraryUsageDescription": "Not used"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#0A0A0F",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "package": "com.yourname.forgether",
+      "versionCode": 1,
+      "permissions": []
     },
     "web": {
       "bundler": "metro",
@@ -31,12 +41,18 @@
         {
           "image": "./assets/images/splash-icon.png",
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#0A0A0F"
         }
-      ]
+      ],
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      }
     }
   }
 }
