@@ -4,7 +4,7 @@ let db: SQLiteDatabase | null = null;
 
 export async function getDb(): Promise<SQLiteDatabase> {
   if (!db) {
-    db = await openDatabaseAsync('forget_her.db');
+    db = await openDatabaseAsync('movy.db');
     await initTables();
     await seedData();
   }
