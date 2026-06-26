@@ -9,7 +9,6 @@ A digital detox app to help you move on. Track your streaks, complete missions, 
 - **Missions** — Daily & one-time tasks with XP rewards
 - **Level System** — Earn XP, level up as you heal
 - **Journal** — Free-form entries with mood/trigger tags
-- **Letters to Ex** — Write what you never got to say (stays on your device)
 - **Urge Mode** — Breathing exercise, distraction generator, journal quick-write
 - **12 Achievements** — Auto-unlock as you hit milestones
 - **100% On-Device** — SQLite database, no accounts, no servers
